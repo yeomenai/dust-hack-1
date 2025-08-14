@@ -1,69 +1,42 @@
-# JobsAndBids Smart Contract
+# Dust Hack Project
 
-A decentralized job marketplace built on Ethereum (or any EVM-compatible blockchain) where job creators can post jobs and bidders can place bids. Jobs can have **auto-accept bid thresholds** and track the lifecycle from **Open → Accepted → Completed/Cancelled**.
+This project contains a decentralized job marketplace on an Ethereum-compatible blockchain, along with a worker system to automate job bidding and execution.
 
-## Features
+## Components
 
-- **Create Jobs** — Any address can create a new job with a description, token type, and optional auto-accept bid amount.
-- **Place Bids** — Any address (except the job creator) can bid on open jobs with a bid description, amount, and token address.
-- **Auto-Accept Bids** — If a bid amount is less than or equal to the auto-accept threshold, the bid is automatically accepted.
-- **Manually Accept Bids** — The job creator can accept any bid while the job is open.
-- **Cancel Jobs** — Job creators can cancel jobs before accepting any bid.
-- **Complete Jobs** — Mark accepted jobs as completed.
-- **View Functions** — Retrieve job details, bids, and listing info.
+### 1. Smart Contract (`/contract`)
 
-## Contract Details
+The core of the project is the `JobsAndBids.sol` smart contract, which facilitates a decentralized job marketplace.
 
-- **Solidity Version**: `^0.8.20`
-- **License**: MIT
-- **Enums**:
-  - `JobStatus`: `Open`, `Accepted`, `Cancelled`, `Completed`
-- **Structs**:
-  - `Bid`: Stores bid details (bidder, amount, token, description, timestamps).
-  - `Job`: Stores job details, accepted bids, bids array, and timestamps.
-- **Events**:
-  - `JobCreated`
-  - `BidPlaced`
-  - `BidAccepted`
-  - `JobCancelled`
-  - `JobCompleted`
+**Features:**
 
-## Functions
+-   **Job Creation**: Users can create jobs with descriptions, token specifications, and optional auto-accept bid amounts.
+-   **Bidding**: Workers can bid on open jobs.
+-   **Automatic Bid Acceptance**: Bids that meet the auto-accept threshold are automatically accepted.
+-   **Manual Bid Acceptance**: Job creators can manually accept bids.
+-   **Job Lifecycle Management**: The contract tracks job statuses (`Open`, `Accepted`, `Completed`, `Cancelled`).
 
-### Job Management
-- `createJob(string description, uint256 autoAcceptBidAmount, address token)`
-- `cancelJob(uint256 jobId)`
-- `completeJob(uint256 jobId)`
+For more details, see the [contract README](./contract/README.md).
 
-### Bidding
-- `placeBid(uint256 jobId, uint256 amount, address token, string description)`
-- `acceptBid(uint256 jobId, uint256 bidId)`
+### 2. Worker (`/worker`)
 
-### Getters
-- `getJob(uint256 jobId)`
-- `getBids(uint256 jobId)`
-- `getJobCount()`
-- `getJobIdAtIndex(uint256 index)`
-- `getJobDetail(uint256 jobId)`
+The worker is a client-side application that interacts with the `JobsAndBids` smart contract. It can be configured to run in one of two roles:
 
-## Deployment
+-   **Creator Role**: Posts new jobs to the marketplace.
+-   **Worker Role**: Automatically listens for new jobs, places bids, and executes the work described in the job.
 
-### Using Hardhat
-```bash
-# Install dependencies
-npm install --save-dev hardhat @nomiclabs/hardhat-ethers ethers
+The worker is designed to process a series of steps defined in the job description, such as moving to a specific location and dropping items.
 
-# Compile contract
-npx hardhat compile
+For more details, see the [worker README](./worker/README.md).
 
-# Deploy script (example)
-const hre = require("hardhat");
+## How It Works
 
-async function main() {
-  const JobsAndBids = await hre.ethers.getContractFactory("JobsAndBids");
-  const jobsAndBids = await JobsAndBids.deploy();
-  await jobsAndBids.deployed();
-  console.log("JobsAndBids deployed to:", jobsAndBids.address);
-}
+1.  A **job creator** uses the worker application to deploy a new job to the `JobsAndBids` smart contract. The job description contains a series of actions to be performed.
+2.  A **worker** application, listening for `JobCreated` events from the smart contract, automatically places a bid on the new job.
+3.  If the bid is below the `autoAcceptBidAmount`, the contract automatically accepts it. Otherwise, the creator can accept it manually.
+4.  Once a bid is accepted, the worker assigned to the job executes the steps outlined in the job description.
+5.  Upon completion, the worker calls the `completeJob` function in the smart contract to mark the job as `Completed`.
 
-main();
+This project demonstrates a complete, end-to-end decentralized system for automating and managing jobs between untrusted parties.
+
+For detailed installation instructions, see the [Installation Guide](https://docs.google.com/document/d/1BB8MTydnFoa4F7QSWmI4gSv380Tp-FGBDmso8nPjOR8/edit?tab=t.0).
