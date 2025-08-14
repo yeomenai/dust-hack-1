@@ -1,6 +1,7 @@
 # Dust Hack Project
 
 This project contains a decentralized job marketplace on an Ethereum-compatible blockchain, along with a worker system to automate job bidding and execution.
+https://alpha.dustproject.org/?debug-app=https://command.yeomen.ai/dust-app.json
 
 ## Components
 
@@ -40,3 +41,4 @@ For more details, see the [worker README](./worker/README.md).
 This project demonstrates a complete, end-to-end decentralized system for automating and managing jobs between untrusted parties.
 
 For detailed installation instructions, see the [Installation Guide](https://docs.google.com/document/d/1BB8MTydnFoa4F7QSWmI4gSv380Tp-FGBDmso8nPjOR8/edit?tab=t.0).
+
