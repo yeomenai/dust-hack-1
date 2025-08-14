@@ -1,0 +1,35 @@
+{
+    "version": "1.1.0",
+    "name": "Job & Bid Manager",
+    "description": "Post jobs, receive bids, hire workers, and track completion.",
+    "category": "",
+    "imageUrl": "",
+    "formFields": [
+        {
+            "id": "role",
+            "type": "radio",
+            "label": "Select Your Role",
+            "placeholder": "",
+            "required": true,
+            "options": [
+                {
+                    "value": "creator",
+                    "label": "Job Creator (Hire Workers)"
+                },
+                {
+                    "value": "worker",
+                    "label": "Worker (Bid for Jobs)"
+                }
+            ],
+            "value": "worker"
+        },
+        {
+            "id": "appData",
+            "type": "textarea",
+            "label": "Custom Data",
+            "placeholder": "Define custom data",
+            "required": false
+        }
+    ],
+    "mainScript": "index.js"
+}
