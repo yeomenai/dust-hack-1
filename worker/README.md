@@ -2,7 +2,9 @@
 
 A worker system that allows **job creators** to post jobs and **workers** to bid, process, and complete them.  
 
+<img width="1602" height="705" alt="Job Manager App" src="https://github.com/user-attachments/assets/a211e8e0-29e1-4aaa-82e3-fc081c1d10b1" />
 ---
+
 
 ## Features
 - Create and manage jobs
@@ -18,4 +20,5 @@ A worker system that allows **job creators** to post jobs and **workers** to bid
 For detailed installation instructions, see the [Installation Guide](https://docs.google.com/document/d/1BB8MTydnFoa4F7QSWmI4gSv380Tp-FGBDmso8nPjOR8/edit?tab=t.0).
 
 ---
+
 
